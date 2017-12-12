@@ -14,3 +14,15 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('customers', 'CustomersController@index');
+
+Route::get('customers/{id}', 'CustomersController@show');
+
+Route::get('customers/{id}/address', 'CustomersController@showAddress');
+
+Route::get('klarna', 'KlarnaController@index');
+
+Route::get('klarna-confirmation', 'KlarnaController@confirmation');
+
+Route::get('klarna-acknowledge', 'KlarnaController@acknowledge');
