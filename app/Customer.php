@@ -21,7 +21,7 @@ class Customer extends Model
     }
 
     public function companies(){
-        return $this->hasMany(Companies::class);
+        return $this->hasMany(Company::class);
     }
 
 }

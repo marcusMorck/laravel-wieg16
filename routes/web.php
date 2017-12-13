@@ -21,6 +21,9 @@ Route::get('customers/{id}', 'CustomersController@show');
 
 Route::get('customers/{id}/address', 'CustomersController@showAddress');
 
+Route::get('customers/by-company/{id}', 'CustomersController@showCompany');
+
+
 Route::get('klarna', 'KlarnaController@index');
 
 Route::get('klarna-confirmation', 'KlarnaController@confirmation');

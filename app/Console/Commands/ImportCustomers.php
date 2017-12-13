@@ -3,9 +3,11 @@
 namespace App\Console\Commands;
 
 use App\Address;
-use App\Companies;
+use App\Company;
 use App\Customer;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Console\Command;
+
 
 class ImportCustomers extends Command
 {
@@ -50,28 +52,37 @@ class ImportCustomers extends Command
         curl_close($ch);
 
         $data = json_decode($response, true);
-        $companies = [];
         $this->info("Importing Customers");
+
+        $companies = [];
         foreach ($data as $customer){
 
-        $companies[] = $customer['customer_company'];
-        $this->info("Importing customer with id " . $customer['id']);
-        $dbCustomer = Customer::findOrNew($customer['id']);
-        $dbCustomer->fill($customer)->save();
+            $companies[] = $customer['customer_company'];
 
-        $address = $customer['address'];
+            $this->info("Importing customer with id " . $customer['id']);
+            $dbCustomer = Customer::findOrNew($customer['id']);
+            $dbCustomer->fill($customer)->save();
 
-        if (!isset($address)) continue;
-        $dbAddress = Address::findOrNew($address['id']);
-        $dbAddress->fill($address)->save();
+            $address = $customer['address'];
 
+            if (!isset($address)) continue;
+                $dbAddress = Address::findOrNew($address['id']);
+                $dbAddress->fill($address)->save();
+            }
 
-        }
         array_unique($companies);
-        foreach ($companies as $company){
 
-            $dbCompany = Companies::where("customer_company", "=", $company)->first() ?? new Companies();
-            $dbCompany->fill(['company_name' => 'customer_companya']);
+        foreach ($companies as $company){
+            $dbCompany = Company::where('company_name', '=', $company)->first();
+            if ($dbCompany == null){
+                $dbCompany = new Company();
+                $dbCompany->fill(['company_name' => $company])->save();
+
+            }
+            DB::table('customers')
+                ->where('customer_company', '=', $dbCompany->company_name)
+                ->update(['company_id' => $dbCompany->id]);
+
         }
         $this->info("Customers imported");
     }
