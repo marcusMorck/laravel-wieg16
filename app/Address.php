@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Address extends Model
 {
     protected $table = "Address";
-    public $timestamps = false;
     public $incrementing = false;
+
     protected $guarded = [];
 
     protected $fillable = ["id", "customer_id", "customer_address_id", "email",

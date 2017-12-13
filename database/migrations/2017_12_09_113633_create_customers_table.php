@@ -20,7 +20,7 @@ class CreateCustomersTable extends Migration
             $table->string('email', 255);
             $table->unsignedTinyInteger('gender')->nullable();
             $table->boolean('customer_activated')->nullable();
-            $table->unsignedBigInteger('group_id');
+            $table->unsignedBigInteger('group_id')->index();
             $table->string('customer_company', 150);
             $table->unsignedBigInteger('default_billing')->nullable();
             $table->unsignedBigInteger('default_shipping')->nullable();

@@ -1,0 +1,87 @@
+<?php
+
+namespace App\Console\Commands;
+
+use App\Order;
+use App\OrderBillingAddress;
+use App\OrderItem;
+use App\OrderShippingAddress;
+use Illuminate\Console\Command;
+
+class ImportOrders extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'import:orders';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'importing orders from Milletech';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
+        $this->info("Importing orders...");
+        $ch = curl_init("https://www.milletech.se/invoicing/export/");
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+        $items[] = [];
+        $data = json_decode($response, true);
+        $this->info("Importing orders");
+
+        foreach ($data as $order){
+            //var_dump($order);
+
+                        $items[] = $order['items'];
+
+                        $this->info("Importing order");
+                        $dbOrder = Order::findOrNew($order['id']);
+                        $dbOrder->fill($order)->save();
+
+                        $billingAddress = $order['billing_address'];
+
+                        if (!isset($billingAddress)) continue;
+                        $dbBillingAddress = OrderBillingAddress::findOrNew($billingAddress['id']);
+                        $dbBillingAddress->fill($billingAddress)->save();
+
+                        $shippingAddress = $order['shipping_address'];
+
+                        if (!isset($shippingAddress)) continue;
+                        $dbShippingAddress = OrderShippingAddress::findOrNew($shippingAddress['id']);
+                        $dbShippingAddress->fill($shippingAddress)->save();
+
+                        foreach ($items as $item){
+                            var_dump($item);
+
+
+                        $dbItems = OrderItem::findOrNew($item['id']);
+                        $dbItems->fill($items)->save();
+                        }
+
+        }
+    }
+}

@@ -52,7 +52,6 @@ class ImportCustomers extends Command
         curl_close($ch);
 
         $data = json_decode($response, true);
-        $this->info("Importing Customers");
 
         $companies = [];
         foreach ($data as $customer){
@@ -71,7 +70,7 @@ class ImportCustomers extends Command
             }
 
         array_unique($companies);
-
+        $this->info("Importing Companies");
         foreach ($companies as $company){
             $dbCompany = Company::where('company_name', '=', $company)->first();
             if ($dbCompany == null){
@@ -82,7 +81,6 @@ class ImportCustomers extends Command
             DB::table('customers')
                 ->where('customer_company', '=', $dbCompany->company_name)
                 ->update(['company_id' => $dbCompany->id]);
-
         }
         $this->info("Customers imported");
     }
