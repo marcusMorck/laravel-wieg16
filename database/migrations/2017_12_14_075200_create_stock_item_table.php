@@ -14,8 +14,8 @@ class CreateStockItemTable extends Migration
     public function up()
     {
         Schema::create('stock_item', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+            $table->unsignedBigInteger('id');
+            $table->boolean('is_in_stock');
         });
     }
 

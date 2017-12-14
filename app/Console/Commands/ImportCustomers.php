@@ -57,7 +57,9 @@ class ImportCustomers extends Command
         foreach ($data as $customer){
 
             $companies[] = $customer['customer_company'];
+
             $this->info("Importing customer with id " . $customer['id']);
+
             $dbCustomer = Customer::findOrNew($customer['id']);
             $dbCustomer->fill($customer)->save();
 

@@ -14,8 +14,10 @@ class CreateGroupPricesTable extends Migration
     public function up()
     {
         Schema::create('group_prices', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+            $table->unsignedBigInteger('id', true);
+            $table->decimal('price', 12,4);
+            $table->unsignedBigInteger('group_id')->index();
+            $table->unsignedBigInteger('price_id')->index();
         });
     }
 

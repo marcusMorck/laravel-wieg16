@@ -14,8 +14,7 @@ class AddCompanyIdToCustomersTable extends Migration
     public function up()
     {
         Schema::table('customers', function (Blueprint $table){
-            $table->unsignedBigInteger('company_id')->index();
-
+            $table->unsignedBigInteger('company_id')->index()->nullable();
         });
     }
 
@@ -27,7 +26,7 @@ class AddCompanyIdToCustomersTable extends Migration
     public function down()
     {
         Schema::table('customers', function (Blueprint $table){
-            $table->dropColumn('company_id')->nullable();
+            $table->dropColumn('company_id');
         });
     }
 }
