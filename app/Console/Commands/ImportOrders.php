@@ -49,39 +49,36 @@ class ImportOrders extends Command
 
         $response = curl_exec($ch);
         curl_close($ch);
-        $items[] = [];
+
         $data = json_decode($response, true);
         $this->info("Importing orders");
 
         foreach ($data as $order){
-            //var_dump($order);
+            if ($order['status'] == "processing"){
+                $this->info("Importing order with id:" . $order['id']);
+                $dbOrder = Order::findOrNew($order['id']);
+                $dbOrder->fill($order)->save();
 
-                        $items[] = $order['items'];
+                $billingAddress = $order['billing_address'];
 
-                        $this->info("Importing order");
-                        $dbOrder = Order::findOrNew($order['id']);
-                        $dbOrder->fill($order)->save();
+                if (!isset($billingAddress)) continue;
+                    $dbBillingAddress = OrderBillingAddress::findOrNew($billingAddress['id']);
+                    $dbBillingAddress->fill($billingAddress)->save();
 
-                        $billingAddress = $order['billing_address'];
+                    $shippingAddress = $order['shipping_address'];
 
-                        if (!isset($billingAddress)) continue;
-                        $dbBillingAddress = OrderBillingAddress::findOrNew($billingAddress['id']);
-                        $dbBillingAddress->fill($billingAddress)->save();
+                if (!isset($shippingAddress)) continue;
+                    $dbShippingAddress = OrderShippingAddress::findOrNew($shippingAddress['id']);
+                    $dbShippingAddress->fill($shippingAddress)->save();
 
-                        $shippingAddress = $order['shipping_address'];
+                    $items = $order['items'];
 
-                        if (!isset($shippingAddress)) continue;
-                        $dbShippingAddress = OrderShippingAddress::findOrNew($shippingAddress['id']);
-                        $dbShippingAddress->fill($shippingAddress)->save();
-
-                        foreach ($items as $item){
-                            var_dump($item);
-
-
-                        $dbItems = OrderItem::findOrNew($item['id']);
-                        $dbItems->fill($items)->save();
-                        }
-
+                foreach ($items as $item){
+                    $dbItems = OrderItem::findOrNew($item['id']);
+                    $dbItems->fill($item)->save();
+                }
+            }
         }
+        $this->info("Orders imported successfully!");
     }
 }

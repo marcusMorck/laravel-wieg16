@@ -57,7 +57,6 @@ class ImportCustomers extends Command
         foreach ($data as $customer){
 
             $companies[] = $customer['customer_company'];
-
             $this->info("Importing customer with id " . $customer['id']);
             $dbCustomer = Customer::findOrNew($customer['id']);
             $dbCustomer->fill($customer)->save();
@@ -82,6 +81,7 @@ class ImportCustomers extends Command
                 ->where('customer_company', '=', $dbCompany->company_name)
                 ->update(['company_id' => $dbCompany->id]);
         }
-        $this->info("Customers imported");
+        $this->info("Customers imported successfully!");
+        $this->info("Companies imported successfully!");
     }
 }
