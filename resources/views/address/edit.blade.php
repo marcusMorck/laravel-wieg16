@@ -35,11 +35,12 @@
 
             </nav>
 
-            <form action="{{action('AddressController@store')}}" method="post">
+            <form action="{{action('AddressController@update', ['id' => $address->id])}}" method="post">
                 {{csrf_field()}}
-                <input name="firstname" value="{{$address->firstname}}" placeholder="First Name">
-                <input name="lastname" value="{{$address->lastname}}" placeholder="Last Name">
-                <input name="email" value="{{$address->email}}" placeholder="Email">
+                {{method_field('PUT')}}
+                <input name="firstname" value="{{$address->firstname}}">
+                <input name="lastname" value="{{$address->lastname}}">
+                <input name="email" value="{{$address->email}}">
             </form>
             <a href="{{ URL::to('addresses') }}">Go back</a>
         </div>

@@ -12,36 +12,35 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
         <style>
             html, body {
                 background-color: #fff;
                 color: #636b6f;
                 font-family: 'Raleway', sans-serif;
+                font-weight: 100;
+                height: 100vh;
                 margin: 0;
-                font-size: 12px;
             }
         </style>
     </head>
     <body>
-        <div class="container">
 
-            <h1>Laravel-wieg16</h1>
+                <div class="container">
+                @foreach($links as $key => $value)
 
+                    <div class="row text-center text-lg-left">
 
-            <nav class="navbar navbar-inverse">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="{{ URL::to('addresses') }}">Addresses</a>->address
+                        <div class="col-lg-3 col-md-4 col-xs-6">
+                            <a href="#" class="d-block mb-4 h-100">
+                                <img class="img-fluid img-thumbnail" src="{{$value->link}}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    @endforeach
                 </div>
 
-            </nav>
 
-            <form action="{{action('AddressController@store')}}" method="post">
-                {{csrf_field()}}
-                <input name="firstname" value="{{$address->firstname}}" placeholder="First Name">
-                <input name="lastname" value="{{$address->lastname}}" placeholder="Last Name">
-                <input name="email" value="{{$address->email}}" placeholder="Email">
-            </form>
-            <a href="{{ URL::to('addresses') }}">Go back</a>
-        </div>
+
     </body>
 </html>

@@ -33,7 +33,7 @@
                     <a class="navbar-brand" href="{{ URL::to('addresses') }}">Addresses</a>
                 </div>
                 <ul class="nav navbar-nav">
-                   <li> <a class="btn btn-small btn-info" href="#">Create an address</a></li>
+                   <li> <a class="btn btn-small btn-info" href="{{action('AddressController@create')}}">Create an address</a></li>
                 </ul>
             </nav>
 
@@ -71,7 +71,7 @@
                             <a class="btn btn-small btn-info" href="{{URL::to('addresses/' . $value->id)}}">Show</a>
                         </td>
                         <td>
-                            <a class="btn btn-small btn-info" href="#">Edit</a>
+                            <a class="btn btn-small btn-info" href="{{action('AddressController@edit', ['id' => $value->id])}}">Edit</a>
                         </td>
                         <td>
                             <a class="btn btn-small btn-info" href="#">Delete</a>

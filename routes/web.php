@@ -42,14 +42,4 @@ Route::resources([
                 'stock-items' => 'StockItemController'
 ]);
 
-/*
-(['addresses' => 'AddressController',
-    'companies' => 'CompanyController',
-    'group-prices' => 'GroupPriceController',
-    'order-billing-addresses' => 'OrderBillingAddressController',
-    'orders' => 'OrderController',
-    'order-items' => 'OrderItemController',
-    'order-shippings' => 'OrderShippingAddressController',
-    'products' => 'ProductController',
-    'stock-items' => 'StockItemController'
-]*/
+Route::get('instagram', 'InstagramController@show');

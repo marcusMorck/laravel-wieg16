@@ -27,7 +27,7 @@ class AddressController extends Controller
      */
     public function create()
     {
-        return view('address.create');
+        return view('address.create', ['address' => new Address()]);
     }
 
     /**
@@ -38,10 +38,11 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-       $input = $request->all();
-       Address::create($input);
 
-       return redirect('address.index');
+       $input = $request->all();
+       $address = Address::create($input);
+
+       return response()->redirectToAction('AddressController@edit', ['id' => $address->id]);
 
     }
 
@@ -66,7 +67,7 @@ class AddressController extends Controller
     public function edit($id)
     {
         $address = Address::find($id);
-        return view('address.edit', compact('address'));
+        return view('address.edit', ['address' => $address]);
     }
 
     /**
@@ -97,6 +98,5 @@ class AddressController extends Controller
         $address->delete();
 
         return view('address.index');
-
     }
 }
