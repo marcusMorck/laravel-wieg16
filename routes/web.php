@@ -43,3 +43,5 @@ Route::resources([
 ]);
 
 Route::get('instagram', 'InstagramController@show');
+
+Route::get('twitter', 'TwitterController@wordCount');

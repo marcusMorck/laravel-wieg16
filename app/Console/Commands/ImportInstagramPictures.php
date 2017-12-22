@@ -53,11 +53,7 @@ class ImportInstagramPictures extends Command
 
             foreach ($lessData as $impdata){
 
-                $links[] = [
-                    'link' => $impdata['link'],
-                    'filter' => $impdata['filter']
 
-                ];
             }
         }
         if ($links != null){

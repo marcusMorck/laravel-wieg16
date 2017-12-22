@@ -25,15 +25,15 @@
         </style>
     </head>
     <body>
-
-                <div class="container">
+    <img src="https://www.instagram.com/p/BLTjMU_je4TulfMH07dhCkPijTwM5FZtdahoUQ0/" alt="Smiley face" height="42" width="42">
+    <div class="container">
                 @foreach($links as $key => $value)
 
                     <div class="row text-center text-lg-left">
 
                         <div class="col-lg-3 col-md-4 col-xs-6">
                             <a href="#" class="d-block mb-4 h-100">
-                                <img class="img-fluid img-thumbnail" src="{{$value->link}}" alt="">
+                                <img class="img-fluid img-thumbnail" src="https://www.instagram.com/p/BLTjMU_je4TulfMH07dhCkPijTwM5FZtdahoUQ0/" alt="">
                             </a>
                         </div>
                     </div>

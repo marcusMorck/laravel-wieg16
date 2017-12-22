@@ -9,5 +9,5 @@ class Instagram extends Model
     protected $table = "instagram_galleri";
     public $timestamps = false;
 
-    protected $fillable = ["id", "height", "width", "url", "link", "filter"];
+    protected $fillable = ["id", "user_id", "link", "filter", "tags", "likes"];
 }
