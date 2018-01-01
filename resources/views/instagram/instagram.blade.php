@@ -25,7 +25,6 @@
         </style>
     </head>
     <body>
-    <img src="https://www.instagram.com/p/BLTjMU_je4TulfMH07dhCkPijTwM5FZtdahoUQ0/" alt="Smiley face" height="42" width="42">
     <div class="container">
         @foreach($images as $img)
             <img src="{{ $img->url }}">
