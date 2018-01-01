@@ -14,7 +14,8 @@ class CreateTwitterTable extends Migration
     public function up()
     {
         Schema::create('twitter', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->primary();
+            $table->BigInteger('id', false, true)->primary();
+            $table->string('created_at', 250);
             $table->string('text', 250);
         });
     }

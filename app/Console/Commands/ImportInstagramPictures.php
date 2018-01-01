@@ -52,7 +52,13 @@ class ImportInstagramPictures extends Command
         foreach ($allData as $lessData){
 
             foreach ($lessData as $impdata){
+                [
+                    //'user_id' => $impdata['user_id'],
+                    'link' => $impdata['link'],
+                    'filter' => $impdata['filter'],
+                    'likes' => $impdata['likes']
 
+                ];
 
             }
         }

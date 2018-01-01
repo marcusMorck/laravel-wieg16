@@ -48,18 +48,13 @@ class ImportTwitter extends Command
         "postman-token: fea22e01-0b38-73a5-eaf7-a34ac6f191f5"
     ));
 
-        $response = curl_exec($ch);
+        $response = json_decode(curl_exec($ch), true);
         curl_close($ch);
 
-        $data = json_decode($response, true);
 
-        foreach ($data['statuses'] as $status){
-            $dbTwitter = Twitter::findOrNew($status['id']);
-
-           $dbTwitter->fill([
-               'id' => $status['id'],
-               'text' => $status['text']
-           ])->save();
+        foreach ($response['statuses'] as $tweet){
+            $dbTwitter = Twitter::findOrNew($tweet['id']);
+            $dbTwitter->fill($tweet)->save();
         }
     }
 }
