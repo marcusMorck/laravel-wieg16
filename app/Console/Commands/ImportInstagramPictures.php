@@ -42,35 +42,19 @@ class ImportInstagramPictures extends Command
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, 0);
 
-        $response = curl_exec($ch);
+        $response = json_decode(curl_exec($ch), true);
 
         curl_close($ch);
-        $links = [];
 
         $this->info('Importing pictures from instagram');
-        $allData = json_decode($response, true);
-        foreach ($allData as $lessData){
 
-            foreach ($lessData as $impdata){
-                [
-                    //'user_id' => $impdata['user_id'],
-                    'link' => $impdata['link'],
-                    'filter' => $impdata['filter'],
-                    'likes' => $impdata['likes']
+        foreach ($response['data'] as $data){
+            $dbInstagram = Instagram::findOrNew($data['id']);
 
-                ];
-
-            }
-        }
-        if ($links != null){
-        foreach ($links as $link){
-            $dbLink = Instagram::where('link', '=', $link)->first();
-            if ($dbLink == null){
-                $dbLink = new Instagram();
-                $dbLink->fill($link)->save();
-            }
-
-        }
+            $dbInstagram->fill([
+                "id" => $data['id'],
+                "url" => $data['images']['standard_resolution']['url']
+            ])->save();
         }
 
     }

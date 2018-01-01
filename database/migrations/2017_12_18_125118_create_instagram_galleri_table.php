@@ -14,11 +14,8 @@ class CreateInstagramGalleriTable extends Migration
     public function up()
     {
         Schema::create('instagram_galleri', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->primary();
-            $table->string('link')->nullable();
-            $table->string('filter')->nullable();
-            $table->string('tags')->nullable();
-            $table->string('likes')->nullable();
+            $table->string('id', 500)->nullable();
+            $table->string('url',400)->nullable();
         });
     }
 

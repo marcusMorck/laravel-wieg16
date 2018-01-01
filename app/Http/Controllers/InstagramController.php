@@ -17,13 +17,12 @@ class InstagramController extends Controller
         curl_close($ch);
 
         $data = json_decode($response, true);
-
         return response()->json($data);
 
     }
 
     public function show(){
-        $links = Instagram::all();
-        return view('instagram.instagram', ['links' => $links]);
+        $url = Instagram::all();
+        return view('instagram.instagram', ['images' => $url]);
     }
 }
