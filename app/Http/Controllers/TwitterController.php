@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 class TwitterController extends Controller
 {
     public function wordCount(){
+        //detta skulle kunna vara en function i models
         $dbTwitter = Twitter::all();
 
         $wordList = [];
@@ -30,6 +31,7 @@ class TwitterController extends Controller
     }
 
     public function excludeWords(){
+        //detta skulle kunna vara en function i models
         $filter = array('SUV', 'XC90', '@VolvoCarUSA', '8', 'Driven:');
         $dbTwitter = Twitter::all();
         $wordList = [];
@@ -45,5 +47,12 @@ class TwitterController extends Controller
         }
         $result = array_count_values($wordList);
         return response()->json($result);
+    }
+
+    public function searchTweet(Request $request){
+
+        $tweets = Twitter::searchTweetCount($request->bearertoken, $request->searchtweet);
+
+        return View('twitter/show', ['tweets' => $tweets]);
     }
 }

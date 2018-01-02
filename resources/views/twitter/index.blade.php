@@ -31,15 +31,31 @@
 
             <div class="content">
 
-                <form action="{{ action('TwitterController@countWordsInTweetsAndSort') }}" method="post">
+                <form action="{{ action('TwitterController@searchTweet') }}" method="post">
                     {{ csrf_field() }}
 
-                    <label>Token:<input name="twittertoken" type="text"></label>
+                    <label>bearerToken:<input name="bearertoken" type="text"></label>
 
-                    <label>Search Tweet<input name="word" type="text"></label>
+                    <label>Search Tweet<input name="searchtweet" type="text"></label>
 
-                    <input name="submit" type="submit" value="Search!">
+                    <input name="submit" type="submit" value="Search">
                 </form>
+
+                <table>
+                    <thead>
+                    <tr>
+                        <td>tweet</td>
+                        <td>count</td>
+                    </tr>
+                    </thead>
+                    @foreach($tweets as $tweet => $count)
+                        <tr>
+                            <td>{{ $tweet }}</td>
+                            <td>{{ $count }}</td>
+                        </tr>
+
+                    @endforeach
+                </table>
             </div>
     </body>
 </html>

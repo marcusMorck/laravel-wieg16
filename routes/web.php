@@ -47,3 +47,7 @@ Route::get('instagram', 'InstagramController@show');
 Route::get('twitter', 'TwitterController@wordCount');
 
 Route::get('twitterexcl', 'TwitterController@excludeWords');
+
+Route::post('twitterse', 'TwitterController@searchTweet');
+
+//Route::get()
